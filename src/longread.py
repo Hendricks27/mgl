@@ -144,7 +144,7 @@ def bam_sam_to_fasta(bsam_fp, fasta_fp):
         mm_tag = mm_tag.split(",")
         ml_tag = ml_tag.split(",")
 
-        if mm_tag[0] != 'C+m':
+        if mm_tag[0] not in ['C+m', "C+m?"]:
             # print(mm_tag[0], "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             continue
         else:
