@@ -115,24 +115,26 @@ def bam_sam_to_fasta(bsam_fp, fasta_fp):
         tags_list = line[11:]
         tags = {}
         for tag_str in tags_list:
+            tag_str = tag_str[:2].upper() + tag_str[2:]
+
             tag = [tag_str[:4], tag_str[5:]]
-            if tag_str.startswith("Ml:B:C"):
-                tag = ["Ml:B:C", tag_str[7:]]
+            if tag_str.startswith("ML:B:C"):
+                tag = ["ML:B:C", tag_str[7:]]
             tags[tag[0]] = tag[1]
 
         read_name = basic_info[0]
         read_seq = basic_info[9].upper()
 
-        if 'Mm:Z' not in tags:
+        if 'MM:Z' not in tags:
             no_methylation_tag += 1
             continue
 
-        if "Ml:B:C" not in tags:
+        if "ML:B:C" not in tags:
             no_methylation_tag += 1
             continue
 
-        mm_tag = tags['Mm:Z']
-        ml_tag = tags["Ml:B:C"]
+        mm_tag = tags['MM:Z']
+        ml_tag = tags["ML:B:C"]
 
         if mm_tag.endswith(";"):
             mm_tag = mm_tag[:-1]
