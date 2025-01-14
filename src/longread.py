@@ -123,6 +123,7 @@ def bam_sam_to_fasta(bsam_fp, fasta_fp):
             tags[tag[0]] = tag[1]
 
         read_name = basic_info[0]
+        print(read_name)
         read_seq = basic_info[9].upper()
 
         if 'MM:Z' not in tags:
@@ -172,10 +173,17 @@ def bam_sam_to_fasta(bsam_fp, fasta_fp):
         nth_cytosine = 0
         for i in range(len(mm_tag)):
             interval = mm_tag[i] + 1
-            if nth_cytosine == 0:
-                nth_cytosine = interval - 1
-            else:
-                nth_cytosine += interval
+
+            addonefix = 0
+            if i ==0:
+                interval -= 1
+
+                if mm_tag[i] == 0:
+                    addonefix = 1
+
+
+
+            nth_cytosine += interval
             # print(nth_cytosine, interval)
 
             methylated = ml_tag[i] > 127
@@ -183,6 +191,14 @@ def bam_sam_to_fasta(bsam_fp, fasta_fp):
                 methylated_cytosines.append(cytosines_positions[nth_cytosine])
             else:
                 unmethylated_cytosines.append(cytosines_positions[nth_cytosine])
+
+            if read_name == "m64136_200625_174949/694/ccs":
+
+                if addonefix > 0:
+                    print("addonefix")
+                else:
+                    print("FUCK")
+            # nth_cytosine += addonefix
 
         cpg_covered_count = len(
             set(cpg_positions).intersection(set(methylated_cytosines).union(set(unmethylated_cytosines))))
