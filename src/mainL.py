@@ -89,7 +89,7 @@ if __name__ == "__main__":
         print("Debug mode: ", debug, file=sys.stderr)
 
         # Run main function
-        longread.main(basecall_fp, gfa_fp, wd)
+        longread.main(basecall_fp, gfa_fp, wd, threads=thread, debug=debug)
 
 
     elif args.command == 'prepare_fasta':
